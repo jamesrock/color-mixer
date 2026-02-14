@@ -1,6 +1,11 @@
+:root {
+  --gap: 7px;
+}
+
 * {
   padding: 0;
   margin: 0;
+  user-select: none;
 }
 
 html {
@@ -13,6 +18,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color .25s;
 }
 
 #app {
@@ -28,12 +34,12 @@ body {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--gap);
 }
 
 .color {
   display: flex;
-  gap: 10px;
+  gap: var(--gap);
 }
 
 .switch {
@@ -48,9 +54,10 @@ body {
   font-weight: bold;
   cursor: pointer;
   border-radius: 4px;
+  transition: all .2s;
   
   &[data-active="Y"] {
-    transform: scale(.9);
+    color: var(--color);
   }
 
 }

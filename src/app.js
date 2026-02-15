@@ -61,17 +61,14 @@ class ColorMixer extends DisplayObject {
     const node = this.node = createContainer('color-mixer');
     const output = this.output = createContainer('output');
     const swatches = this.swatches = createContainer('swatches');
-    const activeMap = this.activeMap = makeActiveMap();
     const collections = createContainer('colors');
     const foot = createContainer('color-mixer-foot');
     const faveBtn = createButton('fave');
     const clearBtn = createButton('clear');
 
-    const colors = ['#E00000', '#009000', '#0000FF'];
-    const switches = this.switches = makeArray(colors.length, () => []);
-    const storage = this.storage = new Storage('me.jamesrock.color-mixer');
+    const switches = this.switches = makeArray(this.colors.length, () => []);
 
-    colors.forEach((color, ci) => {
+    this.colors.forEach((color, ci) => {
       const collection = createNode('div', 'color');
       collection.style.setProperty('--color', color);
       this.bits.forEach((bit) => {
@@ -107,6 +104,10 @@ class ColorMixer extends DisplayObject {
       
       this.clear();
 
+    });
+
+    output.addEventListener('click', () => {
+      navigator.clipboard.writeText(this.code);
     });
 
     this.calculate();
@@ -145,7 +146,7 @@ class ColorMixer extends DisplayObject {
 
     const faves = this.storage.get('faves') || defaultFaves;
     this.faves = faves;
-    return this;
+    return this.faves;
 
   };
   renderSwatches() {
@@ -192,7 +193,10 @@ class ColorMixer extends DisplayObject {
 
   };
   hexMap = makeHexMap();
+  activeMap = makeActiveMap();
   bits = makeBitArray(8);
+  storage = new Storage('me.jamesrock.color-mixer');
+  colors = ['#E00000', '#009000', '#0000FF'];
   faves = [];
 };
 

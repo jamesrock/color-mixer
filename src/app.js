@@ -10,7 +10,6 @@ import {
   createButton,
   empty
 } from '@jamesrock/rockjs';
-import { icons } from './icons';
 
 const app = document.querySelector('#app');
 const defaultFaves = [
@@ -29,6 +28,20 @@ const defaultFaves = [
   ['#E0FF00', 'yellow'],
   ['#FFFF00', 'yellow'],
   ['#F8E3E5', 'lavender blush'],
+  ['#008CC0', 'soft blue'],
+  ['#0000FF', 'pure blue'],
+  ['#808000', 'olive'],
+  ['#00E0F0', 'sky blue'],
+  ['#00FF00', 'pure green'],
+  ['#F800C0', 'big pink'],
+  ['#F000E0', 'pink'],
+  ['#213F95', 'french blue'],
+  ['#C8A2C9', 'lilac'],
+  ['#FEFBCE', 'cream'],
+  ['#0D3B66', 'regal navy'],
+  ['#FAF0CA', 'lemon chiffon'],
+  ['#A1E1BC', 'celadon'],
+  ['#A1211C', 'red'],
 ];
 
 const makeActiveArray = (a) => {
@@ -60,17 +73,19 @@ class ColorMixer extends DisplayObject {
     super();
 
     const node = this.node = createContainer('color-mixer');
-    const outputWrap = createContainer('output-wrap');
     const output = this.output = createContainer('output');
     const swatches = this.swatches = createContainer('swatches');
     const collections = createContainer('colors');
     const foot = createContainer('foot');
-    const faveBtn = createButton('fave');
-    const clearBtn = createButton('clear');
+    const faveBtn = this.faveBtn = createContainer('fave');
+    const clearBtn = createButton('clear', 'clear');
     const copyBtn = createButton('copy', 'copy');
 
-    copyBtn.innerHTML = `${icons['copy-inactive']}${icons['copy-active']}<span class="toast">copied!</span>`;
+    copyBtn.innerHTML = `<span class="copied">copied!</span><span class="default">copy</span>`;
     copyBtn.dataset.state = 'default';
+
+    faveBtn.innerHTML = '+';
+    faveBtn.title = 'create new swatch';
 
     const switches = this.switches = makeArray(this.colors.length, () => []);
 
@@ -92,12 +107,9 @@ class ColorMixer extends DisplayObject {
       collections.appendChild(collection);
     });
 
-    foot.appendChild(faveBtn);
-    foot.appendChild(outputWrap);
     foot.appendChild(clearBtn);
-    
-    outputWrap.appendChild(output);
-    outputWrap.appendChild(copyBtn);
+    foot.appendChild(output);
+    foot.appendChild(copyBtn);
 
     node.appendChild(collections);
     node.appendChild(foot);
@@ -175,6 +187,8 @@ class ColorMixer extends DisplayObject {
       });
       this.swatches.appendChild(node);
     });
+
+    this.swatches.appendChild(this.faveBtn);
 
     return this;
 

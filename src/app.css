@@ -127,50 +127,37 @@ body {
   width: 100%;
 }
 
-button:not(.copy) {
-  border: 0;
-  background-color: #F000C0;
-  color: white;
-  font-weight: 600;
-  padding: 10px 20px;
-  font-size: inherit;
-  border-radius: 8px;
+button {
   cursor: pointer;
+  border: 0;
+  background-color: #404040;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: inherit;
+  font-weight: 600;
+  color: white;
+  overflow: hidden;
 }
 
 button.copy {
-  position: absolute;
-  right: -28px;
-  top: 8px;
-  border: 0;
-  background-color: transparent;
-  cursor: pointer;
+  padding: 12px 15px;
+  position: relative;
 
-  .toast {
-    top: -35px;
-    left: 50%;
-    transform: translateX(-50%);
+  .default {
     position: absolute;
-    font-size: 16px;
-    background-color: white;
-    padding: 5px 8px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    font-weight: 500;
-  }
-
-  &[data-state="default"] {
-    
-    .active,
-    .toast {
-      display: none;
-    }
-
+    background-color: #404040;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &[data-state="copied"] {
 
-    .inactive {
+    .default {
       display: none;
     }
 
@@ -183,10 +170,21 @@ button.copy {
   flex-wrap: wrap;
   gap: var(--swatch-gap);
 
-  .swatch {
+  .swatch,
+  .fave {
     cursor: pointer;
     width: var(--swatch-size);
     height: var(--swatch-size);
+  }
+
+  .fave {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    line-height: 1;
+    padding-top: 4px;
+    box-sizing: border-box;
   }
 
 }

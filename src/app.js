@@ -7,7 +7,8 @@ import {
   makeArray,
   createContainer,
   createNode,
-  createButton
+  createButton,
+  empty
 } from '@jamesrock/rockjs';
 
 const app = document.querySelector('#app');
@@ -29,6 +30,24 @@ const defaultFaves = [
   ['#F8E3E5', 'lavender blush'],
 ];
 
+const makeActiveArray = (a) => {
+  const ref = makeBitArray(8);
+  let leftover = a;
+  return makeArray(8, (v, i) => {
+    if(leftover >= ref[i]) {
+      leftover -= ref[i];
+      return 1;
+    }
+    else {
+      return 0;
+    };
+  });
+};
+
+const makeActiveMap = () => {
+  return makeArray(256, (a, i) => makeActiveArray(i));
+};
+
 class ColorMixer extends DisplayObject {
   constructor() {
 
@@ -36,6 +55,8 @@ class ColorMixer extends DisplayObject {
 
     const node = this.node = createContainer('color-mixer');
     const output = this.output = createContainer('output');
+    const swatches = this.swatches = createContainer('swatches');
+    const activeMap = this.activeMap = makeActiveMap();
     const collections = createContainer('colors');
     const foot = createContainer('color-mixer-foot');
     const faveBtn = createButton('fave');
@@ -69,6 +90,7 @@ class ColorMixer extends DisplayObject {
 
     node.appendChild(collections);
     node.appendChild(foot);
+    node.appendChild(swatches);
 
     faveBtn.addEventListener('click', () => {
       
@@ -89,8 +111,7 @@ class ColorMixer extends DisplayObject {
 
     this.calculate();
     this.getFaves();
-
-    console.log(this.faves);
+    this.renderSwatches();
 
   };
   calculate() {
@@ -116,6 +137,7 @@ class ColorMixer extends DisplayObject {
 
     this.faves.push([this.code, prompt('name?')]);
     this.storage.set('faves', this.faves);
+    this.renderSwatches();
     return this;
 
   };
@@ -126,10 +148,37 @@ class ColorMixer extends DisplayObject {
     return this;
 
   };
+  renderSwatches() {
+
+    empty(this.swatches);
+
+    this.faves.forEach((swatch) => {
+      const node = createContainer('swatch');
+      node.style.backgroundColor = swatch[0];
+      node.title = swatch[1];
+      this.swatches.appendChild(node);
+    });
+
+    return this;
+
+  };
+  setValue(target, value) {
+
+    const activeArray = this.activeMap[value];
+
+    this.switches[target].forEach(($switch, bob) => {
+      $switch.dataset.active = activeArray[bob] ? 'Y' : 'N';
+    });
+
+    this.calculate();
+
+    return this;
+
+  };
   hexMap = makeHexMap();
   bits = makeBitArray(8);
   faves = [];
 };
 
-const mixer = new ColorMixer();
+const mixer = window.mixer = new ColorMixer();
 mixer.appendTo(app);

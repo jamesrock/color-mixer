@@ -48,6 +48,11 @@ const makeActiveMap = () => {
   return makeArray(256, (a, i) => makeActiveArray(i));
 };
 
+const hexToArray = (hex) => {
+  const [hash, R1, R2, G1, G2, B1, B2] = hex.split('');
+  return [`${R1}${R2}`, `${G1}${G2}`, `${B1}${B2}`];
+};
+
 class ColorMixer extends DisplayObject {
   constructor() {
 
@@ -100,12 +105,7 @@ class ColorMixer extends DisplayObject {
 
     clearBtn.addEventListener('click', () => {
       
-      this.switches.forEach((collection) => {
-        collection.forEach(($switch) => {
-          $switch.dataset.active = 'N';
-        });
-      });
-      this.calculate();
+      this.clear();
 
     });
 
@@ -156,18 +156,34 @@ class ColorMixer extends DisplayObject {
       const node = createContainer('swatch');
       node.style.backgroundColor = swatch[0];
       node.title = swatch[1];
+      node.addEventListener('click', () => {
+        this.setColor(swatch[0]);
+      });
       this.swatches.appendChild(node);
     });
 
     return this;
 
   };
-  setValue(target, value) {
+  setColor(hex) {
 
-    const activeArray = this.activeMap[value];
+    hexToArray(hex).forEach((value, i) => {
+      this.activeMap[this.hexMap.indexOf(value)].forEach((onOff, x) => {
+        this.switches[i][x].dataset.active = onOff ? 'Y' : 'N';
+      });
+    });
 
-    this.switches[target].forEach(($switch, bob) => {
-      $switch.dataset.active = activeArray[bob] ? 'Y' : 'N';
+    this.calculate();
+
+    return this;
+
+  };
+  clear() {
+    
+    this.switches.forEach((collection) => {
+      collection.forEach(($switch) => {
+        $switch.dataset.active = 'N';
+      });
     });
 
     this.calculate();

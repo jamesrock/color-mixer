@@ -96,7 +96,6 @@ body {
   font-weight: 600;
   cursor: pointer;
   border-radius: 8px;
-  transition: all .2s;
 
   &:first-child,
   &:last-child {
@@ -105,6 +104,10 @@ body {
   
   &[data-active="Y"] {
     color: var(--color);
+  }
+
+  &:hover {
+    transform: scale(0.9);
   }
 
 }
@@ -130,13 +133,21 @@ body {
 button {
   cursor: pointer;
   border: 0;
-  background-color: #404040;
+  background-color: black;
   padding: 12px 20px;
   border-radius: 8px;
   font-size: inherit;
   font-weight: 600;
   color: white;
   overflow: hidden;
+  opacity: 0.65;
+  transition: opacity 0.125s;
+  
+  &:hover,
+  &:active {
+    opacity: 1;
+  }
+
 }
 
 button.copy {
@@ -145,7 +156,7 @@ button.copy {
 
   .default {
     position: absolute;
-    background-color: #404040;
+    background-color: black;
     left: 0;
     top: 0;
     right: 0;
@@ -175,6 +186,12 @@ button.copy {
     cursor: pointer;
     width: var(--swatch-size);
     height: var(--swatch-size);
+  }
+
+  .swatch {
+    &:hover {
+      transform: scale(0.9);
+    }
   }
 
   .fave {

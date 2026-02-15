@@ -230,18 +230,18 @@ class ColorMixer extends DisplayObject {
 const mixer = window.mixer = new ColorMixer();
 mixer.appendTo(app);
 
-const swatchSize = 25;
-const swatchGap = 2;
-const swatchesPerRow = 16;
+// const swatchSize = 25;
+// const swatchGap = 2;
+// const swatchesPerRow = 16;
 
-const switchSize = 50;
-const switchGap = 4;
-const switchesPerRow = 8;
+// const switchSize = 50;
+// const switchGap = 4;
+// const switchesPerRow = 8;
 
 // document.documentElement.style.setProperty('--swatch-size', `${swatchSize}px`);
 // document.documentElement.style.setProperty('--swatch-gap', `${swatchGap}px`);
 // document.documentElement.style.setProperty('--switch-size', `${switchSize}px`);
 // document.documentElement.style.setProperty('--switch-gap', `${switchGap}px`);
 
-console.log(swatchSize * swatchesPerRow + (swatchGap * (swatchesPerRow-1)));
-console.log(switchSize * switchesPerRow) + (switchGap * (switchesPerRow-1));
+// console.log((swatchSize * swatchesPerRow) + (swatchGap * (swatchesPerRow-1)));
+// console.log((switchSize * switchesPerRow) + (switchGap * (switchesPerRow-1)));

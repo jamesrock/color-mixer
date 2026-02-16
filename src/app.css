@@ -67,6 +67,7 @@ body {
   padding: 15px;
   border-radius: 10px;
   max-width: 430px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
 }
 
 .colors {

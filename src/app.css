@@ -88,6 +88,8 @@ body {
   width: var(--switch-size);
   height: var(--switch-size);
   background-color: var(--color);
+  border: solid 2px var(--color);
+  box-sizing: border-box;
   color: white;
   display: flex;
   align-items: center;
@@ -106,8 +108,9 @@ body {
     color: var(--color);
   }
 
+  &[data-active="Y"],
   &:hover {
-    transform: scale(0.9);
+    border-color: white;
   }
 
 }

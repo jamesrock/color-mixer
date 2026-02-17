@@ -16,35 +16,35 @@ setDocumentHeight();
 
 const app = document.querySelector('#app');
 const defaultFaves = [
-  ['#C00000', 'red'],
-  ['#A00000', 'red'],
-  ['#007000', 'green'],
-  ['#0000C0', 'blue'],
-  ['#8000C0', 'purple'],
-  ['#800080', 'purple'],
-  ['#F06040', 'orange'],
-  ['#FF7F00', 'orange'],
-  ['#F08800', 'orange'],
-  ['#E00080', 'pink'],
-  ['#E000C0', 'pink'],
-  ['#00E0E0', 'cyan'],
-  ['#E0FF00', 'yellow'],
-  ['#FFFF00', 'yellow'],
-  ['#F8E3E5', 'lavender blush'],
-  ['#008CC0', 'soft blue'],
-  ['#0000FF', 'pure blue'],
-  ['#808000', 'olive'],
-  ['#00E0F0', 'sky blue'],
-  ['#00FF00', 'pure green'],
-  ['#F800C0', 'big pink'],
-  ['#F000E0', 'pink'],
-  ['#213F95', 'french blue'],
-  ['#C8A2C9', 'lilac'],
-  ['#FEFBCE', 'cream'],
-  ['#0D3B66', 'regal navy'],
-  ['#FAF0CA', 'lemon chiffon'],
-  ['#A1E1BC', 'celadon'],
-  ['#A1211C', 'red'],
+  '#C00000',
+  '#A00000',
+  '#007000',
+  '#0000C0',
+  '#8000C0',
+  '#800080',
+  '#F06040',
+  '#FF7F00',
+  '#F08800',
+  '#E00080',
+  '#E000C0',
+  '#00E0E0',
+  '#E0FF00',
+  '#FFFF00',
+  '#F8E3E5',
+  '#008CC0',
+  '#0000FF',
+  '#808000',
+  '#00E0F0',
+  '#00FF00',
+  '#F800C0',
+  '#F000E0',
+  '#213F95',
+  '#C8A2C9',
+  '#FEFBCE',
+  '#0D3B66',
+  '#FAF0CA',
+  '#A1E1BC',
+  '#A1211C',
 ];
 
 const makeActiveArray = (a) => {
@@ -164,7 +164,7 @@ class ColorMixer extends DisplayObject {
   };
   addToFaves() {
 
-    this.faves.push([this.code, prompt('name?')]);
+    this.faves.push(this.code);
     this.storage.set('faves', this.faves);
     this.renderSwatches();
     return this;
@@ -183,10 +183,9 @@ class ColorMixer extends DisplayObject {
 
     this.faves.forEach((swatch) => {
       const node = createContainer('swatch');
-      node.style.backgroundColor = swatch[0];
-      node.title = swatch[1];
+      node.style.backgroundColor = swatch;
       node.addEventListener('click', () => {
-        this.setColor(swatch[0]);
+        this.setColor(swatch);
       });
       this.swatches.appendChild(node);
     });
@@ -225,7 +224,7 @@ class ColorMixer extends DisplayObject {
   hexMap = makeHexMap();
   activeMap = makeActiveMap();
   bits = makeBitArray(8);
-  storage = new Storage('me.jamesrock.color-mixer');
+  storage = new Storage('me.jamesrock.hex-maker');
   colors = ['#E00000', '#009000', '#0000FF'];
   faves = [];
 };

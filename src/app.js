@@ -5,6 +5,7 @@ import {
   setDocumentHeight,
   makeBitArray,
   makeHexMap,
+  makeBitMap,
   makeArray,
   createContainer,
   createNode,
@@ -46,24 +47,6 @@ const defaultFaves = [
   '#A1E1BC',
   '#A1211C',
 ];
-
-const makeActiveArray = (a) => {
-  const ref = makeBitArray(8);
-  let leftover = a;
-  return makeArray(8, (v, i) => {
-    if(leftover >= ref[i]) {
-      leftover -= ref[i];
-      return 1;
-    }
-    else {
-      return 0;
-    };
-  });
-};
-
-const makeActiveMap = () => {
-  return makeArray(256, (a, i) => makeActiveArray(i));
-};
 
 const hexToArray = (hex) => {
   const [hash, R1, R2, G1, G2, B1, B2] = hex.split('');
@@ -198,7 +181,7 @@ class ColorMixer extends DisplayObject {
   setColor(hex) {
 
     hexToArray(hex).forEach((value, i) => {
-      this.activeMap[this.hexMap.indexOf(value)].forEach((onOff, x) => {
+      this.bitMap[this.hexMap.indexOf(value)].forEach((onOff, x) => {
         this.switches[i][x].dataset.active = onOff ? 'Y' : 'N';
       });
     });
@@ -222,7 +205,7 @@ class ColorMixer extends DisplayObject {
 
   };
   hexMap = makeHexMap();
-  activeMap = makeActiveMap();
+  bitMap = makeBitMap(8);
   bits = makeBitArray(8);
   storage = new Storage('me.jamesrock.hex-maker');
   colors = ['#E00000', '#009000', '#0000FF'];
